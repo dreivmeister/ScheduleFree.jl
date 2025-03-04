@@ -1,2 +1,5 @@
+name = "ScheduleFree"
+uuid = "8d26dd9c-8121-4250-b600-72296267e0a1"
+
 [deps]
-Optimisers = "3bd65402-5787-11e9-1adc-39752487f4e2"
+Zygote = "e88e6eb3-aa80-5325-afca-941959d7151f"
