@@ -9,3 +9,6 @@ end
 x0 = randn(2)
 x_opt = optimize(:SF_SGD, f, x0, 1000)
 @assert f(x_opt) < 1e-1
+
+x_opt = optimize(:SF_ADAMW, f, x0, 1000)
+@assert f(x_opt) < 1e-1
