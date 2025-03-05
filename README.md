@@ -1,5 +1,6 @@
 # ScheduleFree.jl
 Implementation of Schedule-Free optimization algorithms for ML in Julia.
+The official PyTorch version is here: https://github.com/facebookresearch/schedule_free/tree/main
 
 
 The idea is simple. Provide a differentiable $f: R^n \to R$ to the `optimize(...)` function with some additional hyperparameters and let it run.

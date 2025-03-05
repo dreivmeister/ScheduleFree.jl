@@ -1,7 +1,7 @@
 using Zygote
 
 
-function optimize(::Val{:SF_SGD}, f, x0, max_iters, γ=0.01, β=0.9)
+function optimize(::Val{:SF_SGD}, f, x0, max_iters, γ=1.0, β=0.9)
     grad = x -> Zygote.gradient(f, x)[1]
     t = 1
     z = x = x0
