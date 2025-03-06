@@ -62,7 +62,3 @@ function optimize(::Val{:SF_ADAMW}, f, x0, maxiters; γ=0.0025, λ=0, β1=0.9, �
 
   return x
 end
-
-function optimize(rule::Symbol, args...)
-  optimize(Val(rule), args...)
-end
