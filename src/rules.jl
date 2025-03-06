@@ -1,4 +1,5 @@
 using Zygote: gradient
+using Statistics: norm, mean
 
 function optimize(::Val{:SF_SGD}, f, x0, maxiters; γ=1.0, β=0.9)
     grad = x -> gradient(f, x)[1]
@@ -12,6 +13,34 @@ function optimize(::Val{:SF_SGD}, f, x0, maxiters; γ=1.0, β=0.9)
     end
 
     return x
+end
+
+function optimize(::Val{:PRODIGY_SGD}, f, x0, maxiters; d0, G)
+  @assert d0 > 0 "d0 must be >0"
+  @assert G >= 0 "G must be >=0"
+  grad = x -> gradient(f, x)[1]
+
+  xs = [x0]
+  ds = [d0]
+  gs = []
+  μs = []
+  λs = []
+
+  for k in 1:maxiters
+    gk = grad(xs[end])
+    push!(gs, gk)
+    λk = 1.0
+    push!(λs, λk)
+    μk = (ds[end]^2 * λk) / sqrt(ds[end]^2 * G^2 + sum(ds.^2 .* λs.^2 .* norm.(gs).^2))
+    push!(μs, μk)
+    xk = xs[end] - μk * gk
+    push!(xs, xk)
+    dk_hat = sum(μs[i] * gs[i]' * (x0 - xs[i]) for i in 1:k) / norm(xk - x0)
+    dk = max(dk_hat, ds[end])
+    push!(ds, dk)
+  end
+
+  return mean(μs .* xs[2:end])
 end
 
 function optimize(::Val{:SF_ADAMW}, f, x0, maxiters; γ=0.0025, λ=0, β1=0.9, β2=0.999, ϵ=1e-8)
