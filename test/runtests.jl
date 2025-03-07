@@ -19,3 +19,6 @@ best_hyperparams, best_x, best_x_value = hyperparametersweep(:SF_ADAMW, f, x0, 1
 
 x_opt = optimize(Val(:PRODIGY_SGD), f, x0, 1000; d0=1.0, G=1.0)
 @assert f(x_opt) < 1e-1 "PRODIGY_SGD error is too large: $(f(x_opt))"
+
+x_opt = optimize(Val(:PRODIGY_ADAM), f, x0, 1000)
+@assert f(x_opt) < 1e-1 "PRODIGY_ADAM error is too large: $(f(x_opt))"

@@ -64,6 +64,7 @@ function optimize(::Val{:SF_ADAMW}, f, x0, maxiters; γ=0.0025, λ=0, β1=0.9, �
 end
 
 function optimize(::Val{:PRODIGY_ADAM}, f, x0, maxiters; γ=1.0, d0=1e-6, β1=0.9, β2=0.999, ϵ=1e-8)
+  @assert d0 > 0 "d0 must be >0"
   grad = x -> gradient(f, x)[1]
 
   x = copy(x0)
